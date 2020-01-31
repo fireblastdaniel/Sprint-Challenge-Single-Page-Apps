@@ -3,7 +3,7 @@ import axios from "axios";
 import CharacterCard from "./CharacterCard";
 import './components.css';
 
-export default function CharacterList() {
+const CharacterList = props => {
   // TODO: Add useState to track data from useEffect
   const [characters, setCharacters] = useState([])
 
@@ -22,6 +22,14 @@ export default function CharacterList() {
     getCharacters();
   }, []);
 
+  useEffect(() => {
+    const charList = document.querySelectorAll('.char-card');
+    charList.forEach( item => {
+      item.innerHTML.indexOf(props.filter) !== -1 ? item.style.display = 'block' : item.style.display = 'none';
+    })
+    console.log(props.filter)
+   }, [props.filter]);
+
   return (
     <section className="character-list">
       {characters.map( c => (
@@ -30,3 +38,5 @@ export default function CharacterList() {
     </section>
   );
 }
+
+export default CharacterList;
